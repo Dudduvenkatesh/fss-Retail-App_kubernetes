@@ -46,7 +46,7 @@ stateful:
 image:
   tag: mongo:latest
 
-storage-classes:
+storageclasses:
   provisioner: ebs.csi.aws.com
   type: gp3 
   reclaimPolicy: Retain 
