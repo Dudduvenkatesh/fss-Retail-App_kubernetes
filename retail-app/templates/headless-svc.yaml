@@ -4,9 +4,10 @@ metadata:
   name: {{ .Release.Name }}-headless-svc
   namespace: {{ .Values.namespace }}
 spec:
-  clusterIP: {{ .Values.headless.clusterIP }}
+  clusterIP: {{ .Values.service.mongodb.clusterIP }}
   selector:
     app: {{ .Values.stateful.label }}
   ports:
-    - port: {{ .Values.headless.port }}
+    - protocol: {{ .Values.service.mongodb.protocol }}
       targetPort: {{ .Values.stateful.containerPort }}
+      port: {{ .Values.service.mongodb.port }}

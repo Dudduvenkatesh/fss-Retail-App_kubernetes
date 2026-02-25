@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.stateful.replicas }}
-  serviceName: {{ .Values.stateful.serviceName }}
+  serviceName: {{ .Release.Name }}-headless-svc
   selector:
     matchLabels:
       app: {{ .Values.stateful.label }}
@@ -17,24 +17,22 @@ spec:
     spec:
       containers:
       - name: {{ .Values.stateful.containerName}}
-        image: {{ .Values.stateful.image }}
+        image: "{{ .Values.image.mongodb.repository }}:{{ .Values.image.mongodb.tag }}"
         ports:
-        - containerPort: {{ .Values.headless.containerPort }}
+        - containerPort: {{ .Values.stateful.containerPort }}
         volumeMounts:
           - mountPath: {{ .Values.stateful.mountPath }}
             name: {{ .Values.stateful.volumeName }}
         env:
-        - name: MONGO_INITDB_DATABASE
-          valueFrom:
-            configMapKeyRef:
-              name: {{ .Values.config.name }}
-              key: MONGO_INITDB_DATABASE 
+        - name: {{ .Values.env.MONGO_INITDB_DATABASE }}
+          value: "{{ .Values.config.MONGO_INITDB_DATABASE }}"
+
   volumeClaimTemplates:  # it is referencing pvc automatically instead of refering pvc manually in the pod or yaml file
     - metadata:
         name: {{ .Values.stateful.volumeName }}
       spec:
         accessModes:
-          {{ .Values.stateful.accessModes }}
+          - {{ .Values.stateful.accessMode }}
         storageClassName: {{ .Values.stateful.storageClassName }}
         resources:
           requests:

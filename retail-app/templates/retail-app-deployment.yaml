@@ -7,41 +7,41 @@ spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.deployment.labels.app }}
+      app: {{ .Values.deployment.label }}
   template:
     metadata:
       labels:
-        app: {{ .Values.deployment.labels.app }}
+        app: {{ .Values.deployment.labels }}
     spec:
       containers:
-      - name: {{ .Values.deployment.name }}
-        image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+      - name: {{ .Values.deployment.containerName }}
+        image: "{{ .Values.image.repository }}:{{ .Value.image.tag }}"
         ports:
-        - containerPort: {{ .Values.service.mongodb.port }}
+        - containerPort: {{ .Values.deployment.containerPort }}
         env:
-          - name: MONGODB_URI
+          - name: {{ .Values.env.MONGODB_URI }}
             valueFrom:
               configMapKeyRef: 
                 name: {{ .Values.config.name }}
-                key: MONGODB_URI
-          - name: SESSION_SECRET
+                key: {{ .Values.env.MONGODB_URI }}
+          - name: {{ .Values.env.SESSION_SECRET }}
             valueFrom:
               configMapKeyRef:
                 name: {{ .Values.config.name }}
-                key: SESSION_SECRET
-          - name: PORT
+                key: {{ .Values.env.SESSION_SECRET }}
+          - name: {{ .Values.env.PORT }}
             valueFrom:
               configMapKeyRef:
                 name: {{ .Values.config.name }}
-                key: PORT 
-          - name: EMAIL_USER
+                key: {{ .Values.env.PORT }}
+          - name: {{ .Values.env.EMAIL_USER }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.secret.name }}
-                key: EMAIL_USER
-          - name: EMAIL_PASS
+                key: {{ .Values.env.EMAIL_USER }}
+          - name: {{ .Values.env.EMAIL_PASS }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.secret.name }}
-                key: EMAIL_PASS
+                key: {{ .Values.env.EMAIL_PASS }}
 

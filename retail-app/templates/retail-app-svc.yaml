@@ -4,10 +4,10 @@ metadata:
   name: {{ .Release.Name }}-service
   namespace: {{ .Values.namespace }}
 spec:
-  type: {{ .Values.service.type }}  # Use NodePort if LoadBalancer is not supported
+  type: {{ .Values.service.retail.type }}  # Use NodePort if LoadBalancer is not supported
   ports:
-    - port: {{ .Values.service.mongodb.port }}
+    - port: {{ .Values.service.retail.port }}
       targetPort: {{ .Values.deployment.containerPort }}
-      protocol: {{ .Values.service.protocol }}
+      protocol: {{ .Values.service.retail.type }}
   selector:
-    app: {{ .Values.deployment.labels.app }}
+    app: {{ .Values.deployment.label }}
