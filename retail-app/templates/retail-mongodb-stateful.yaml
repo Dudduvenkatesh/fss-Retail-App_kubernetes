@@ -9,20 +9,20 @@ spec:
   serviceName: {{ .Values.stateful.serviceName }}
   selector:
     matchLabels:
-      app: {{ .Values.stateful.labels.app }}
+      app: {{ .Values.stateful.label }}
   template:
     metadata:
       labels:
-        app: {{ .Values.stateful.labels.app }}
+        app: {{ .Values.stateful.label}}
     spec:
       containers:
-      - name: {{ .Values.stateful.labels.app }}
+      - name: {{ .Values.stateful.containerName}}
         image: {{ .Values.stateful.image }}
         ports:
-        - containerPort: {{ .Values.headless.port }}
+        - containerPort: {{ .Values.headless.containerPort }}
         volumeMounts:
           - mountPath: {{ .Values.stateful.mountPath }}
-            name: {{ .Values.stateful.name }}
+            name: {{ .Values.stateful.volumeName }}
         env:
         - name: MONGO_INITDB_DATABASE
           valueFrom:
@@ -31,12 +31,12 @@ spec:
               key: MONGO_INITDB_DATABASE 
   volumeClaimTemplates:  # it is referencing pvc automatically instead of refering pvc manually in the pod or yaml file
     - metadata:
-        name: {{ .Values.stateful.name }}
+        name: {{ .Values.stateful.volumeName }}
       spec:
         accessModes:
           {{ .Values.stateful.accessModes }}
-        storageClassName: {{ .Values.stateful.sc }}
+        storageClassName: {{ .Values.stateful.storageClassName }}
         resources:
           requests:
-            storage: {{ .Values.stateful.storage }}
+            storage: {{ .Values.stateful.storageSize }}
 

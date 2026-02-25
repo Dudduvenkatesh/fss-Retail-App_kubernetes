@@ -7,7 +7,7 @@ spec:
   type: {{ .Values.service.type }}  # Use NodePort if LoadBalancer is not supported
   ports:
     - port: {{ .Values.service.mongodb.port }}
-      targetPort: {{ .Values.service.mongodb.port }}
+      targetPort: {{ .Values.deployment.containerPort }}
       protocol: {{ .Values.service.protocol }}
   selector:
     app: {{ .Values.deployment.labels.app }}

@@ -19,10 +19,25 @@ deployment:
   labels:
     app: retail
   name: retail-container
+  containerPort: 3130
   replicas: 4
   image:
     repository: saiteja2502/userprofileretail
     tag: latest
+
+stateful:
+  replicas: 1
+  containerName: mongodb
+  serviceName: "retail-release-headless-svc"
+  containerPort: 27017
+  label: mongodb
+  volumeName: mongo-volume
+  mountPath: /data/db
+  accessMode: ReadWriteOnce
+  storageSize: 1Gi
+  storageClassName: retail-release-storageclass
+  image: mongo:latest
+
 
 service:
   type: LoadBalancer 
@@ -31,22 +46,22 @@ service:
     port: 3130
 
 headless:
-  app: mongodb
+  #app: mongodb
   port: 27017
   clusterIP: None
 
 
-stateful:
-  labels:
-    app: mongodb
-  serviceName: "retail-release-headless-svc"
-  replicas: 3
-  name: mongo-data
-  mountPath: /data/db
-  accessModes: ["ReadWriteOnce"]
-  storage: 1Gi
-  sc: retail-release-storageclass
-  image: mongo:latest
+# stateful:
+#   labels:
+#     app: mongodb
+#   serviceName: "retail-release-headless-svc"
+#   replicas: 3
+#   name: mongo-data
+#   mountPath: /data/db
+#   accessModes: ["ReadWriteOnce"]
+#   storage: 1Gi
+#   sc: retail-release-storageclass
+#   image: mongo:latest
 
 storageclasses:
   provisioner: ebs.csi.aws.com

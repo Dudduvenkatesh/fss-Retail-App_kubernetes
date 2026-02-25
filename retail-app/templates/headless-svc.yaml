@@ -6,7 +6,7 @@ metadata:
 spec:
   clusterIP: {{ .Values.headless.clusterIP }}
   selector:
-    app: {{ .Values.headless.app }}
+    app: {{ .Values.stateful.label }}
   ports:
     - port: {{ .Values.headless.port }}
-      targetPort: {{ .Values.headless.port }}
+      targetPort: {{ .Values.stateful.containerPort }}
