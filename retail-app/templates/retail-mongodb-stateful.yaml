@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}-statefulset
   namespace: {{ .Values.namespace }}
 spec:
-  serviceName: {{ .Release.Name }}-mongodb-svc
+  serviceName: {{ .Release.Name }}-headless-svc
   replicas: {{ .Values.stateful.replicas }}
   selector:
     matchLabels:
