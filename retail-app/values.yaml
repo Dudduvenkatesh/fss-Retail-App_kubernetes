@@ -46,9 +46,7 @@ stateful:
   accessModes: ["ReadWriteOnce"]
   storage: 1Gi
   sc: retail-release-storageclass
-image: 
-  repo: mongo
-  tag: latest
+  image: mongo:latest
 
 storageclasses:
   provisioner: ebs.csi.aws.com

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.stateful.labels.app }}
-        image: "{{ .Values.image.repo }}:{{ .Values.image.tag }}"
+        image: {{ .Values.stateful.image }}
         ports:
         - containerPort: {{ .Values.headless.port }}
         volumeMounts:
