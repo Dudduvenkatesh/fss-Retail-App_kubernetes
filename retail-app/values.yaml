@@ -1,0 +1,52 @@
+namespace: venkatesh-ns
+
+secret: 
+  type: Opaque
+  EMAIL_USER: Y2hhZ2FudHl0ZWphMjUwMkBnbWFpbC5jb20=
+  EMAIL_PASS: eXhvcSBianVrIHJkbnQgYWx6cA==
+
+config:
+  MONGODB_URI: "mongodb://mongodb:27017/myDatabase"
+  SESSION_SECRET: "1234"
+  PORT: "3130"
+  MONGO_INITDB_DATABASE: "myDatabase"
+
+
+replicas: 4
+deployment: 
+  labels:
+    app: retail
+  name: retail-container
+image:
+  repository: saiteja2502/userprofile
+  tag: retail:latest
+
+service:
+  type: LoadBalancer 
+  protocol: TCP
+
+headless:
+  app: mongodb
+  port: 27017
+  ClusterIP: None
+
+---
+
+replicas: 3
+stateful:
+  labels:
+    app: mongodb
+  serviceName: "mongodb"
+  name: mongo-data
+  mountPath: /data/db
+  accessModes: ["ReadWriteOnce"]
+  storage: 1Gi
+image:
+  tag: mongo:latest
+
+storage-classes:
+  provisioner: ebs.csi.aws.com
+  type: gp3 
+  reclaimPolicy: Retain 
+  volumeBindingMode: WaitForFirstConsumer
+

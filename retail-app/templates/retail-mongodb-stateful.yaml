@@ -1,0 +1,41 @@
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicas }}
+  serviceName: {{ .Values.stateful.serviceName }}
+  selector:
+    matchLabels:
+      app: {{ .Values.stateful.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.stateful.labels.app }}
+    spec:
+      containers:
+      - name: {{ .Values.stateful.labels.app }}
+        image: "{{ .Values.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.headless.port }}
+        volumeMounts:
+          - mountPath: {{ .Values.stateful.mountPath }}
+            name: {{ .Values.stateful.name }}
+        env:
+        - name: {{ .Values.config.MONGO_INITDB_DATABASE }}
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-config
+              key: {{ .Values.config.MONGO_INITDB_DATABASE }}
+  volumeClaimTemplates:  # it is referencing pvc automatically instead of refering pvc manually in the pod or yaml file
+    - metadata:
+        name: {{ .Values.stateful.name }}
+      spec:
+        accessModes: {{ .Values.stateful.accessModes }}
+        storageClassName: {{ .Values.stateful.storageClassName }}
+        resources:
+          requests:
+            storage: {{ .Values.stateful.storage }}
+
