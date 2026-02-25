@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}-headless-svc
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace}}
 spec:
-  clusterIP: {{ .Values.service.mongodb.clusterIP }}
   selector:
-    app: {{ .Values.stateful.label }}
+    app: {{ .Values.mongoStatefulset.labels.app}}
   ports:
-    - protocol: {{ .Values.service.mongodb.protocol }}
-      targetPort: {{ .Values.stateful.containerPort }}
-      port: {{ .Values.service.mongodb.port }}
+    - protocol: TCP
+      port: {{ .Values.mongoService.port}}
+      targetPort: {{ .Values.mongoPort}}
+  clusterIP: {{ .Values.mongoService.clusterIP}}

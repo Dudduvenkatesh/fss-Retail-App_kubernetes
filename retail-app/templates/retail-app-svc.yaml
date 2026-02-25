@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-service
+  name: {{ .Release.Name }}-retail-svc
   namespace: {{ .Values.namespace }}
 spec:
-  type: {{ .Values.service.retail.type }}  # Use NodePort if LoadBalancer is not supported
-  ports:
-    - port: {{ .Values.service.retail.port }}
-      targetPort: {{ .Values.deployment.containerPort }}
-      protocol: {{ .Values.service.retail.type }}
+  type: {{ .Values.service.retail.type }}
   selector:
     app: {{ .Values.deployment.label }}
+  ports:
+    - protocol: {{ .Values.service.retail.protocol }}
+      port: {{ .Values.service.retail.port }}
+      targetPort: {{ .Values.deployment.containerPort }}

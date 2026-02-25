@@ -11,37 +11,40 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ .Values.deployment.labels }}
+        app: {{ .Values.deployment.label }}
     spec:
       containers:
       - name: {{ .Values.deployment.containerName }}
-        image: "{{ .Values.image.repository }}:{{ .Value.image.tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - containerPort: {{ .Values.deployment.containerPort }}
         env:
           - name: {{ .Values.env.MONGODB_URI }}
             valueFrom:
-              configMapKeyRef: 
-                name: {{ .Values.config.name }}
+              configMapKeyRef:
+                name: {{ .Release.Name }}-config
                 key: {{ .Values.env.MONGODB_URI }}
+
           - name: {{ .Values.env.SESSION_SECRET }}
             valueFrom:
               configMapKeyRef:
-                name: {{ .Values.config.name }}
+                name: {{ .Release.Name }}-config
                 key: {{ .Values.env.SESSION_SECRET }}
+
           - name: {{ .Values.env.PORT }}
             valueFrom:
               configMapKeyRef:
-                name: {{ .Values.config.name }}
+                name: {{ .Release.Name }}-config
                 key: {{ .Values.env.PORT }}
+
           - name: {{ .Values.env.EMAIL_USER }}
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.secret.name }}
+                name: {{ .Release.Name }}-secret
                 key: {{ .Values.env.EMAIL_USER }}
+
           - name: {{ .Values.env.EMAIL_PASS }}
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.secret.name }}
+                name: {{ .Release.Name }}-secret
                 key: {{ .Values.env.EMAIL_PASS }}
-
