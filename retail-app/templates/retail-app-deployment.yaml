@@ -17,31 +17,31 @@ spec:
       - name: {{ .Values.deployment.name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
-        - containerPort: {{ .Values.config.PORT}}
+        - containerPort: {{ .Values.config.PORT }}
         env:
-          - name: {{ .Values.config.MONGODB_URI}}
+          - name: {{ .Values.config.MONGODB_URI }}
             valueFrom:
               configMapKeyRef: 
-                name: {{ .Release.Name}}-config
-                key: {{ .Values.config.MONGODB_URI}}
-          - name: {{ .Values.config.SESSION_SECRET}}
+                name: {{ .Release.Name }}-config
+                key: {{ .Values.config.MONGODB_URI }}
+          - name: {{ .Values.config.SESSION_SECRET }}
             valueFrom:
               configMapKeyRef:
-                name: {{ .Release.Name}}-config
-                key: {{ .Values.config.SESSION_SECRET}}
-          - name: {{ .Values.config.PORT}}
+                name: {{ .Release.Name }}-config
+                key: {{ .Values.config.SESSION_SECRET }}
+          - name: {{ .Values.config.PORT }}
             valueFrom:
               configMapKeyRef:
-                name: {{ .Release.Name}}-config
-                key: {{ .Values.config.PORT}}
-          - name: {{ .Values.secret.EMAIL_USER}}
+                name: {{ .Release.Name }}-config
+                key: {{ .Values.config.PORT }}
+          - name: {{ .Values.secret.EMAIL_USER }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Release.Name }}-secret
-                key: {{ .Values.secret.EMAIL_USER}}
-          - name: {{ .Values.secret.EMAIL_PASS}}
+                key: {{ .Values.secret.EMAIL_USER }} 
+          - name: {{ .Values.secret.EMAIL_PASS }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Release.Name }}-secret
-                key: {{ .Values.secret.EMAIL_PASS}}
+                key: {{ .Values.secret.EMAIL_PASS }}
 
