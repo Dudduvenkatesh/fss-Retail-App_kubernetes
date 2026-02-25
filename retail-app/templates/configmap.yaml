@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}-config
   namespace: {{ .Values.namespace }}
 data:
-  MONGODB_URI: {{ .Values.config.MONGODB_URI }}
-  SESSION_SECRET: {{ .Values.config.SESSION_SECRET }}
-  PORT: {{ .Values.config.PORT }}
-  MONGO_INITDB_DATABASE: {{ .Values.config.MONGO_INITDB_DATABASE }}
+  MONGODB_URI: "{{ .Values.config.data.MONGODB_URI }}"
+  SESSION_SECRET: "{{ .Values.config.data.SESSION_SECRET }}"
+  PORT: "{{ .Values.config.data.PORT }}"
+  MONGO_INITDB_DATABASE: "{{ .Values.config.data.MONGO_INITDB_DATABASE }}"

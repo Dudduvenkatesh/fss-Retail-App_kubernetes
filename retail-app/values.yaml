@@ -1,25 +1,28 @@
 namespace: venkatesh-ns
 
-secret: 
+secret:
+  name: retail-release-secret 
   type: Opaque
-  EMAIL_USER: Y2hhZ2FudHl0ZWphMjUwMkBnbWFpbC5jb20=
-  EMAIL_PASS: eXhvcSBianVrIHJkbnQgYWx6cA==
+  data:
+    EMAIL_USER: Y2hhZ2FudHl0ZWphMjUwMkBnbWFpbC5jb20=
+    EMAIL_PASS: eXhvcSBianVrIHJkbnQgYWx6cA==
 
 config:
-  MONGODB_URI: "mongodb://mongodb:27017/myDatabase"
-  SESSION_SECRET: "1234"
-  PORT: "3130"
-  MONGO_INITDB_DATABASE: "myDatabase"
+  name: retail-release-config
+  data:
+    MONGODB_URI: "mongodb://retail-release-headless-svc:27017/myDatabase"
+    SESSION_SECRET: "1234"
+    PORT: "3130"
+    MONGO_INITDB_DATABASE: "myDatabase"
 
 deployment: 
   labels:
     app: retail
   name: retail-container
   replicas: 4
-
-image:
-  repository: saiteja2502/userprofile
-  tag: retail:latest
+  image:
+    repository: saiteja2502/userprofileretail
+    tag: latest
 
 service:
   type: LoadBalancer 
@@ -30,21 +33,22 @@ service:
 headless:
   app: mongodb
   port: 27017
-  ClusterIP: None
+  clusterIP: None
 
----
 
 stateful:
   labels:
     app: mongodb
-  serviceName: "mongodb"
+  serviceName: "retail-release-headless-svc"
   replicas: 3
   name: mongo-data
   mountPath: /data/db
   accessModes: ["ReadWriteOnce"]
   storage: 1Gi
-image:
-  tag: mongo:latest
+  sc: retail-release-storageclass
+image: 
+  repo: mongo
+  tag: latest
 
 storageclasses:
   provisioner: ebs.csi.aws.com
@@ -53,4 +57,9 @@ storageclasses:
   volumeBindingMode: WaitForFirstConsumer
 
 pvc:
-  storage: 2Gi
+  storageClassName: retail-release-storageclass
+  accessModes: 
+    ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
