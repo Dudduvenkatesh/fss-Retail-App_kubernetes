@@ -17,7 +17,7 @@ spec:
       - name: {{ .Values.deployment.name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
-        - containerPort: {{ .Values.config.PORT }}
+        - containerPort: {{ .Values.service.mongodb.port }}
         env:
           - name: {{ .Values.config.MONGODB_URI }}
             valueFrom:

@@ -24,6 +24,8 @@ image:
 service:
   type: LoadBalancer 
   protocol: TCP
+  mongodb:
+    port: 3130
 
 headless:
   app: mongodb
