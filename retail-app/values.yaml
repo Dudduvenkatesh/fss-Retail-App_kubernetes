@@ -11,12 +11,12 @@ config:
   PORT: "3130"
   MONGO_INITDB_DATABASE: "myDatabase"
 
-
-replicas: 4
 deployment: 
   labels:
     app: retail
   name: retail-container
+  replicas: 4
+
 image:
   repository: saiteja2502/userprofile
   tag: retail:latest
@@ -32,11 +32,11 @@ headless:
 
 ---
 
-replicas: 3
 stateful:
   labels:
     app: mongodb
   serviceName: "mongodb"
+  replicas: 3
   name: mongo-data
   mountPath: /data/db
   accessModes: ["ReadWriteOnce"]
@@ -50,3 +50,5 @@ storage-classes:
   reclaimPolicy: Retain 
   volumeBindingMode: WaitForFirstConsumer
 
+pvc:
+  storage: 2Gi

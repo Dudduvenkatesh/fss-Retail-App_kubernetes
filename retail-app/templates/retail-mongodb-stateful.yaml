@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}-statefulset
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.stateful.replicas }}
   serviceName: {{ .Values.stateful.serviceName }}
   selector:
     matchLabels:

@@ -11,5 +11,5 @@ spec:
    # - ReadWriteMany # multiple nodes can read/write
   resources:
     requests:
-      storage:  {{ .Values.stateful.storage }} # the amount of storage requested by the PVC
+      storage:  {{ .Values.pvc.storage }} # the amount of storage requested by the PVC
   storageClassName: {{ .Values.stateful.storageClassName }} # the name of the StorageClass to use for this PVC
