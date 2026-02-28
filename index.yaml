@@ -3,6 +3,16 @@ entries:
   retail-app:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-02-28T10:33:59.299067496Z"
+    description: A Helm chart for Kubernetes
+    digest: 4669b0d795acaad32984c9ea97146b036d5536ea3f3b982224d748c2d8d4f36e
+    name: retail-app
+    type: application
+    urls:
+    - https://github.com/Dudduvenkatesh/fss-Retail-App_kubernetes/releases/download/retail-app-0.1.4/retail-app-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-02-28T10:25:24.857504468Z"
     description: A Helm chart for Kubernetes
     digest: fa836015d0a6a4e6a35850f6946b104a586c96862d82ea53ab64dffe8151b993
@@ -31,4 +41,4 @@ entries:
     urls:
     - https://github.com/Dudduvenkatesh/fss-Retail-App_kubernetes/releases/download/retail-app-0.1.1/retail-app-0.1.1.tgz
     version: 0.1.1
-generated: "2026-02-28T10:25:24.857515889Z"
+generated: "2026-02-28T10:33:59.299093845Z"
