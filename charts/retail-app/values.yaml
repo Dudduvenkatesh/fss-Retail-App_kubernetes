@@ -99,7 +99,7 @@ stateful:
   mountPath: /data/db
   accessMode: ReadWriteOnce
   storageSize: 1Gi
-  storageClassName: retail-release-storageclass
+  storageClassName: retail-app-storageclass
 
 image:
   repository: saiteja2502/userprofileretail
