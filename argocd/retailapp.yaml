@@ -18,7 +18,7 @@ spec:
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: venky-ns 
+    namespace: venkatesh-ns 
 
   syncPolicy:
     automated:
